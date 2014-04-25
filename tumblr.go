@@ -133,15 +133,3 @@ func addLimitOffset(url *url.URL, params LimitOffset) {
 		url.Query().Set("offset", string(params.Offset))
 	}
 }
-
-// Blog followers
-func (blog Blog) Followers() ([]Blog, error) {
-	url, err := blog.entityURL("followers")
-	return nil, nil
-}
-
-// Posts liked by a blog
-func (blog Blog) Likes() ([]Post, error) {
-	// TODO
-	return nil, nil
-}
