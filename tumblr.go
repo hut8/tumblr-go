@@ -32,7 +32,8 @@ type Blog struct {
 type Post struct{}
 
 const (
-	urlBase = "http://api.tumblr.com/v2/blog/"
+	urlBaseBlog = "http://api.tumblr.com/v2/blog/"
+	urlBaseUser = "http://api.tumblr.com/v2/user/"
 )
 
 // Post Types
@@ -48,8 +49,8 @@ const (
 )
 
 // Where the request is directed to
-func (blog Blog) entityURL(entityType string) (*url.URL, error) {
-	url, err := url.Parse(urlBase)
+func (blog Blog) blogEntityURL(entityType string) (*url.URL, error) {
+	url, err := url.Parse(urlBaseBlog)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +88,7 @@ func (params PostRequestParams) validatePostRequestParams() error {
 // Posts posted by a blog
 func (blog Blog) Posts(params PostRequestParams) []Post {
 	// Build URL
-	url, err := blog.entityURL("posts")
+	url, err := blog.blogEntityURL("posts")
 	if err != nil {
 		return nil
 	}
