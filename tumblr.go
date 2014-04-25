@@ -1,17 +1,28 @@
 package tumblr
 
 import (
+	"net/http"
 	"net/url"
 	"path"
 )
 
-// Errors
-type TumblrError struct {
-	Message string
+func callAPI(u url.URL) (*TumblrAPIResponse, error) {
+	resp, err := http.Get(u.String())
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	// TODO JSON decoding
 }
 
-func (err TumblrError) Error() string {
-	return err.Message
+type TumblrAPIResponse struct {
+	Meta     Meta
+	Response interface{}
+}
+
+type Meta struct {
+	Status int64
+	Msg    string
 }
 
 type Blog struct {
