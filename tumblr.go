@@ -5,6 +5,15 @@ import (
 	"path"
 )
 
+// Errors
+type TumblrError struct {
+	Message string
+}
+
+func (err TumblrError) Error() string {
+	return err.Message
+}
+
 type Blog struct {
 	BaseHostname string
 }
