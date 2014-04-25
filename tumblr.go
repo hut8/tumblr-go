@@ -33,12 +33,12 @@ const (
 )
 
 // Where the request is directed to
-func entityURL(entityType string) (*url.URL, error) {
+func (Blog blog) entityURL(entityType string) (*url.URL, error) {
 	url, err := url.Parse(urlBase)
 	if err != nil {
 		return nil, err
 	}
-	url.Path = path.Join(url.Path, entityType)
+	url.Path = path.Join(url.Path, blog.BaseHostname, entityType)
 	return url, nil
 }
 
