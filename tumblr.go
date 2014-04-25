@@ -46,16 +46,20 @@ func (blog Blog) entityURL(entityType string) (*url.URL, error) {
 	return url, nil
 }
 
+type LimitOffset struct {
+	Limit  int
+	Offset int
+}
+
 // Request Parameter Types
 type PostRequestParams struct {
 	PostType   string
 	Id         int64
 	Tag        string
-	Limit      int
-	Offset     int
 	ReblogInfo bool
 	NotesInfo  bool
 	Filter     string
+	LimitOffset
 }
 
 func (params PostRequestParams) validatePostRequestParams() error {
@@ -92,16 +96,6 @@ func (blog Blog) Posts(params PostRequestParams) []Post {
 		url.Query().Set("tag", params.Tag)
 	}
 
-	// Limit
-	if params.Limit != 0 {
-		url.Query().Set("limit", string(params.Limit))
-	}
-
-	// Offset
-	if params.Offset != 0 {
-		url.Query().Set("offset", string(params.Offset))
-	}
-
 	// ReblogInfo
 	if params.ReblogInfo {
 		url.Query().Set("reblog_info", "true")
@@ -112,7 +106,27 @@ func (blog Blog) Posts(params PostRequestParams) []Post {
 		url.Query().Set("notes_info", "true")
 	}
 
+	addLimitOffset(url, params.LimitOffset)
+
 	return nil
+}
+
+func addLimitOffset(url *url.URL, params LimitOffset) {
+	// Limit
+	if params.Limit != 0 {
+		url.Query().Set("limit", string(params.Limit))
+	}
+
+	// Offset
+	if params.Offset != 0 {
+		url.Query().Set("offset", string(params.Offset))
+	}
+}
+
+// Blog followers
+func (blog Blog) Followers() ([]Blog, error) {
+	url, err := blog.entityURL("followers")
+	return nil, nil
 }
 
 // Posts liked by a blog
