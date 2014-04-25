@@ -4,7 +4,7 @@ package tumblr
 func (blog Blog) Followers(params LimitOffset) ([]Blog, error) {
 	url, err := blog.blogEntityURL("followers")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	addLimitOffset(url, params)
 	// TODO send to API

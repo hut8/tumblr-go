@@ -4,9 +4,10 @@ package tumblr
 func (blog Blog) Info() (*BlogInfo, error) {
 	url, err := blog.blogEntityURL("info")
 	if err != nil {
-		return err
+		return nil, err
 	}
-
+	callAPI(*url)
+	//res, err := callAPI(url)
 	return nil, nil
 }
 
