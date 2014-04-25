@@ -18,24 +18,6 @@ type Blog struct {
 	BaseHostname string
 }
 
-// Request Parameter Types
-type PostRequestParams struct {
-	PostType   *string
-	Id         *int64
-	Tag        *string
-	Limit      int
-	Offset     int
-	ReblogInfo bool
-	NotesInfo  bool
-}
-
-func (params PostRequestParams) validatePostRequestParams() error {
-	if params.Limit < 1 || params.Limit > 20 {
-		return TumblrError{"Post request parameter limit out of range"}
-	}
-	return nil
-}
-
 type Post struct{}
 
 const (
@@ -62,6 +44,29 @@ func (blog Blog) entityURL(entityType string) (*url.URL, error) {
 	}
 	url.Path = path.Join(url.Path, blog.BaseHostname, entityType)
 	return url, nil
+}
+
+// Request Parameter Types
+type PostRequestParams struct {
+	PostType   *string
+	Id         *int64
+	Tag        *string
+	Limit      int
+	Offset     int
+	ReblogInfo bool
+	NotesInfo  bool
+	Filter     *string
+}
+
+func (params PostRequestParams) validatePostRequestParams() error {
+	if params.Limit < 1 || params.Limit > 20 {
+		return TumblrError{"Post request parameter limit out of range"}
+	}
+	if params.Filter != nil &&
+		!(*params.Filter == "html" || *params.Filter == "raw") {
+		return TumblrError{`Filter, if specified, must be either "html" or "raw"`}
+	}
+	return nil
 }
 
 // Posts posted by a blog
