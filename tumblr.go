@@ -17,7 +17,7 @@ type PostRequestParams struct {
 type Post struct{}
 
 const (
-	urlBase = "http://api.tumblr.com/v2/"
+	urlBase = "http://api.tumblr.com/v2/blog/"
 )
 
 // Post Types
