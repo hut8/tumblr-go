@@ -1,5 +1,10 @@
 package tumblr
 
+import (
+	"net/url"
+	"path"
+)
+
 type Blog struct {
 	Basename string
 }
