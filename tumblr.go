@@ -44,7 +44,14 @@ func (blog Blog) entityURL(entityType string) (*url.URL, error) {
 
 // Posts posted by a blog
 func (blog Blog) Posts(params PostRequestParams) []Post {
-	// TODO
+	// Build URL
+	url, err := blog.entityURL("posts")
+	if err != nil {
+		return nil
+	}
+	if params.PostType != nil {
+		url.Path = path.Join(url.Path, *params.PostType)
+	}
 	return nil
 }
 
