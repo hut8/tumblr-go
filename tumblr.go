@@ -1,28 +1,22 @@
 package tumblr
 
 import (
-	"encoding/json"
+	//	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
 )
 
-func callAPI(u url.URL) (*TumblrAPIResponse, error) {
+func callAPI(u url.URL) ([]byte, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	// JSON decoding
-	dec := json.NewDecoder(resp.Body)
-	var v TumblrAPIResponse
-	err := dec.Decode(v)
-	if err != nil {
-		return nil, err
-	}
-
-	return &v, nil
+	data, err := ioutil.ReadAll(resp.Body)
+	return data, err
 }
 
 type TumblrAPIResponse struct {
