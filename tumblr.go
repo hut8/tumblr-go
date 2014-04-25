@@ -20,7 +20,20 @@ type Blog struct {
 
 // Request Parameter Types
 type PostRequestParams struct {
-	PostType *string
+	PostType   *string
+	Id         *int64
+	Tag        *string
+	Limit      int
+	Offset     int
+	ReblogInfo bool
+	NotesInfo  bool
+}
+
+func (params PostRequestParams) validatePostRequestParams() error {
+	if params.Limit < 1 || params.Limit > 20 {
+		return TumblrError{"Post request parameter limit out of range"}
+	}
+	return nil
 }
 
 type Post struct{}
