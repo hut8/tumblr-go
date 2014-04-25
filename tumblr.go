@@ -6,7 +6,7 @@ import (
 )
 
 type Blog struct {
-	Basename string
+	BaseHostname string
 }
 
 type PostRequestParams struct{}
