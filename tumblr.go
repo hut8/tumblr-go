@@ -33,7 +33,7 @@ const (
 )
 
 // Where the request is directed to
-func (Blog blog) entityURL(entityType string) (*url.URL, error) {
+func (blog Blog) entityURL(entityType string) (*url.URL, error) {
 	url, err := url.Parse(urlBase)
 	if err != nil {
 		return nil, err
