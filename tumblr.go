@@ -9,7 +9,10 @@ type Blog struct {
 	BaseHostname string
 }
 
-type PostRequestParams struct{}
+// Request Parameter Types
+type PostRequestParams struct {
+	PostType *string
+}
 
 type Post struct{}
 
