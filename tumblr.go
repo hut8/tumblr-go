@@ -130,7 +130,7 @@ func (blog Blog) Followers() ([]Blog, error) {
 }
 
 // Posts liked by a blog
-func (blog Blog) Likes() []Post {
+func (blog Blog) Likes() ([]Post, error) {
 	// TODO
-	return nil
+	return nil, nil
 }
