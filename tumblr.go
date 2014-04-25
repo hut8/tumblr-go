@@ -1,6 +1,7 @@
 package tumblr
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"path"
@@ -12,7 +13,16 @@ func callAPI(u url.URL) (*TumblrAPIResponse, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	// TODO JSON decoding
+
+	// JSON decoding
+	dec := json.NewDecoder(resp.Body)
+	var v TumblrAPIResponse
+	err := dec.Decode(v)
+	if err != nil {
+		return nil, err
+	}
+
+	return &v, nil
 }
 
 type TumblrAPIResponse struct {
