@@ -8,7 +8,7 @@ import (
 	"path"
 )
 
-func callAPI(u url.URL) ([]byte, error) {
+func callAPI(u *url.URL) ([]byte, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return nil, err
