@@ -79,6 +79,15 @@ func (blog Blog) Posts(params PostRequestParams) []Post {
 	if params.PostType != nil {
 		url.Path = path.Join(url.Path, *params.PostType)
 	}
+
+	// Query string parameters
+	if params.ReblogInfo {
+		url.Query().Set("reblog_info", "true")
+	}
+	if params.NotesInfo {
+		url.Query().Set("notes_info", "true")
+	}
+
 	return nil
 }
 
