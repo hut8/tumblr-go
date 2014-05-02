@@ -10,6 +10,32 @@ import (
 	"path"
 )
 
+type TumblrAPIResponse struct {
+	Meta     Meta
+	Response interface{}
+}
+
+type Meta struct {
+	Status int64
+	Msg    string
+}
+
+type APICredentials struct {
+	Key string
+	Secret string
+}
+
+type LimitOffset struct {
+	Limit  int
+	Offset int
+}
+
+type Tumblr struct {
+	Credentials APICredentials
+}
+
+// API Functions
+
 func callAPI(u *url.URL) (interface{}, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
@@ -45,31 +71,17 @@ func callAPI(u *url.URL) (interface{}, error) {
 	return res, nil
 }
 
-type TumblrAPIResponse struct {
-	Meta     Meta
-	Response interface{}
-}
-
-type Meta struct {
-	Status int64
-	Msg    string
-}
-
-type APICredentials struct {
-	Key string
-	Secret string
-}
-
-type Blog struct {
-	BaseHostname string
-	Credentials APICredentials
+func (t Tumblr) NewBlog(baseHostname string) (Blog) {
+	return Blog{
+		BaseHostname: baseHostname,
+		t: t,
+	}
 }
 
 type Post struct{}
 
 const (
-	urlBaseBlog = "http://api.tumblr.com/v2/blog/"
-	urlBaseUser = "http://api.tumblr.com/v2/user/"
+	apiBaseURL = "http://api.tumblr.com/v2/"
 )
 
 // Post Types
@@ -84,28 +96,14 @@ const (
 	Chat   = "chat"
 )
 
-func (blog Blog) apiURL() (*url.URL, error) {
-	url, err := url.Parse(urlBaseBlog)
+func (t Tumblr) apiURL() (*url.URL, error) {
+	url, err := url.Parse(apiBaseURL)
 	if err != nil {
 		return nil, err
 	}
-	addCredentials(url, blog.Credentials)
+	addCredentials(url, t.Credentials)
+	fmt.Printf("made api url: %v\n", url)
 	return url, nil
-}
-
-// Where the request is directed to
-func (blog Blog) blogEntityURL(entityType string) (*url.URL, error) {
-	url, err := blog.apiURL()
-	if err != nil {
-		return nil, err
-	}
-	url.Path = path.Join(url.Path, blog.BaseHostname, entityType)
-	return url, nil
-}
-
-type LimitOffset struct {
-	Limit  int
-	Offset int
 }
 
 // Request Parameter Types
