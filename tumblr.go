@@ -166,10 +166,11 @@ func (blog Blog) Posts(params PostRequestParams) []Post {
 	return nil
 }
 
-
-
 func addCredentials(url *url.URL, credentials APICredentials) {
-	url.Query().Set("api_key", credentials.Key)
+	fmt.Printf("credentials.Key: %v\n", credentials.Key)
+	vals := url.Query()
+	vals.Set("api_key", credentials.Key)
+	url.RawQuery = vals.Encode()
 }
 
 func addLimitOffset(url *url.URL, params LimitOffset) {
