@@ -2,8 +2,8 @@ package tumblr
 
 import (
 	"fmt"
+	"github.com/bitly/go-simplejson"
 	"github.com/kr/pretty"
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -36,7 +36,7 @@ type Tumblr struct {
 
 // API Functions
 
-func callAPI(u *url.URL) (interface{}, error) {
+func callAPI(u *url.URL) (*simplejson.Json, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return nil, err
@@ -48,15 +48,24 @@ func callAPI(u *url.URL) (interface{}, error) {
 		return nil, err
 	}
 
-	var raw map[string]interface{}
-	json.Unmarshal(data, &raw)
-
-	// How the crap am I supposed to do this?!
-	meta := Meta{
-		Status: int64((raw["meta"]).(map[string]interface{})["status"].(float64)),
-		Msg: (raw["meta"]).(map[string]interface{})["msg"].(string),
+	json, err := simplejson.NewJson(data)
+	if err != nil {
+		return nil, err
 	}
 
+	// Handle Meta
+	statCode, err := json.Get("meta").Get("status").Int64()
+	if err != nil {
+		return nil, err
+	}
+	statMsg, err := json.Get("meta").Get("msg").String()
+	if err != nil {
+		return nil, err
+	}
+	meta := Meta{
+		Status: statCode,
+		Msg: statMsg,
+	}
 	if meta.Status != 200 {
 		err = fmt.Errorf("tumblr API responded with HTTP status %d: %s",
 			meta.Status,
@@ -64,7 +73,7 @@ func callAPI(u *url.URL) (interface{}, error) {
 		return nil, err
 	}
 
-	res := raw["response"]
+	res := json.Get("response")
 
 	fmt.Printf("response for %v:\n%v\n", u, pretty.Formatter(res))
 

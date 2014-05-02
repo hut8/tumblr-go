@@ -21,5 +21,5 @@ func TestLikes(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	fmt.Printf("total count: %d", l.TotalCount)
+	fmt.Printf("total count: %d\n", l.TotalCount)
 }

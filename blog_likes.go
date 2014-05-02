@@ -18,9 +18,17 @@ func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 		return nil, err
 	}
 
-	likesCount := int64((res.(map[string]interface{}))["liked_count"].(float64))
+	likesCount, err := res.Get("liked_count").Int64()
+	posts := make([]Post, 0, likesCount)
+	rawPosts, err := res.Get("liked_posts").Array()
+	for _, _ = range rawPosts {
+		posts = append(posts, Post{})
+	}
+
+	// Parse out post objects
 	likes := &BlogLikes{
 	 	TotalCount: likesCount,
+		Likes: posts,
 	}
 
 	return likes, nil
