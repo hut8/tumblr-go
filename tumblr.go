@@ -55,8 +55,14 @@ type Meta struct {
 	Msg    string
 }
 
+type APICredentials struct {
+	Key string
+	Secret string
+}
+
 type Blog struct {
 	BaseHostname string
+	Credentials APICredentials
 }
 
 type Post struct{}
