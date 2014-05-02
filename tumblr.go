@@ -1,14 +1,16 @@
 package tumblr
 
 import (
-	//	"encoding/json"
+	"fmt"
+	"github.com/kr/pretty"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
 )
 
-func callAPI(u *url.URL) ([]byte, error) {
+func callAPI(u *url.URL) (interface{}, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return nil, err
@@ -16,7 +18,31 @@ func callAPI(u *url.URL) ([]byte, error) {
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
-	return data, err
+	if err != nil {
+		return nil, err
+	}
+
+	var raw map[string]interface{}
+	json.Unmarshal(data, &raw)
+
+	// How the crap am I supposed to do this?!
+	meta := Meta{
+		Status: int64((raw["meta"]).(map[string]interface{})["status"].(float64)),
+		Msg: (raw["meta"]).(map[string]interface{})["msg"].(string),
+	}
+
+	if meta.Status != 200 {
+		err = fmt.Errorf("tumblr API responded with HTTP status %d: %s",
+			meta.Status,
+			meta.Msg)
+		return nil, err
+	}
+
+	res := raw["response"]
+
+	fmt.Printf("response for %v:\n%v\n", u, pretty.Formatter(res))
+
+	return res, nil
 }
 
 type TumblrAPIResponse struct {
