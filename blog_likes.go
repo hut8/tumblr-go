@@ -7,20 +7,23 @@ import (
 // Posts liked by a blog
 func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	url, err := blog.blogEntityURL("likes")
+
 	if err != nil {
 		return nil, err
 	}
 	addLimitOffset(url, params)
 
-	_, err = callAPI(url)
+	res, err := callAPI(url)
 	if err != nil {
 		return nil, err
 	}
-	// likes := &BlogLikes{
-	// 	TotalCount: res["liked_count"].(int64),
-	// }
 
-	return nil, nil
+	likesCount := int64((res.(map[string]interface{}))["liked_count"].(float64))
+	likes := &BlogLikes{
+	 	TotalCount: likesCount,
+	}
+
+	return likes, nil
 }
 
 type BlogLikes struct {
