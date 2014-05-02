@@ -84,9 +84,18 @@ const (
 	Chat   = "chat"
 )
 
+func (blog Blog) apiURL() (*url.URL, error) {
+	url, err := url.Parse(urlBaseBlog)
+	if err != nil {
+		return nil, err
+	}
+	addCredentials(url, blog.Credentials)
+	return url, nil
+}
+
 // Where the request is directed to
 func (blog Blog) blogEntityURL(entityType string) (*url.URL, error) {
-	url, err := url.Parse(urlBaseBlog)
+	url, err := blog.apiURL()
 	if err != nil {
 		return nil, err
 	}
@@ -157,6 +166,12 @@ func (blog Blog) Posts(params PostRequestParams) []Post {
 	addLimitOffset(url, params.LimitOffset)
 
 	return nil
+}
+
+
+
+func addCredentials(url *url.URL, credentials APICredentials) {
+	url.Query().Set("api_key", credentials.Key)
 }
 
 func addLimitOffset(url *url.URL, params LimitOffset) {
