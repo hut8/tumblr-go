@@ -1,6 +1,7 @@
 package tumblr
 
 import (
+	"github.com/google/go-querystring/query"
 	"path"
 )
 
@@ -38,26 +39,8 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 	if params.PostType != "" {
 		url.Path = path.Join(url.Path, params.PostType)
 	}
-
-	// Id
-	if params.Id != 0 {
-		url.Query().Set("id", string(params.Id))
-	}
-
-	// Tag
-	if params.Tag != "" {
-		url.Query().Set("tag", params.Tag)
-	}
-
-	// ReblogInfo
-	if params.ReblogInfo {
-		url.Query().Set("reblog_info", "true")
-	}
-
-	// NotesInfo
-	if params.NotesInfo {
-		url.Query().Set("notes_info", "true")
-	}
+	v, _ := query.Values(params)
+	url.RawQuery = v.Encode()
 
 	addLimitOffset(url, params.LimitOffset)
 
