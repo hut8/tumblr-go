@@ -74,7 +74,7 @@ func callAPI(u *url.URL) (*simplejson.Json, error) {
 
 	res := json.Get("response")
 
-	fmt.Printf("response for %v:\n%s\n", u, pretty.Formatter(res))
+	//fmt.Printf("response for %v:\n%s\n", u, pretty.Formatter(res))
 
 	return res, nil
 }
@@ -110,14 +110,12 @@ func (t Tumblr) apiURL() (*url.URL, error) {
 		return nil, err
 	}
 	addCredentials(url, t.Credentials)
-	fmt.Printf("made api url: %v\n", url)
 	return url, nil
 }
 
 // Request Parameter Types
 
 func addCredentials(url *url.URL, credentials APICredentials) {
-	fmt.Printf("credentials.Key: %v\n", credentials.Key)
 	vals := url.Query()
 	vals.Set("api_key", credentials.Key)
 	url.RawQuery = vals.Encode()

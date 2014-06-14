@@ -2,7 +2,7 @@ package tumblr
 
 import (
 	"testing"
-	"fmt"
+//	"fmt"
 )
 
 
