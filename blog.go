@@ -11,7 +11,7 @@ type Blog struct {
 }
 
 // Where the request is directed to
-func (blog Blog) blogEntityURL(entityType string) (*url.URL, error) {
+func (blog *Blog) blogEntityURL(entityType string) (*url.URL, error) {
 	url, err := blog.t.apiURL()
 	if err != nil {
 		return nil, err

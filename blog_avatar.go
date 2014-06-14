@@ -14,7 +14,7 @@ func validateAvatarSize(size int32) bool {
 	}
 }
 
-func (blog Blog) Avatar(size int32) (*url.URL, error) {
+func (blog *Blog) Avatar(size int32) (*url.URL, error) {
 	url, err := blog.blogEntityURL("avatar")
 	if err != nil {
 		return nil, err
