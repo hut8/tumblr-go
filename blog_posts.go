@@ -62,9 +62,15 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 	addLimitOffset(url, params.LimitOffset)
 
 	data, err := callAPI(url)
+	if err != nil {
+		return nil, err
+	}
 
 	var posts []Post
-	// TODO Deserialize results
+	rawSlice := data.Get("posts").MustArray()
+	for _, r := range rawSlice {
+		posts = append(posts, Post(r))
+	}
 
 	return posts, nil
 }

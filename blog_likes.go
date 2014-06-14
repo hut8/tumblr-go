@@ -22,7 +22,7 @@ func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	posts := make([]Post, 0, likesCount)
 	rawPosts, err := res.Get("liked_posts").Array()
 	for _, _ = range rawPosts {
-		posts = append(posts, Post{})
+		posts = append(posts, struct{}{})
 	}
 
 	// Parse out post objects
