@@ -34,13 +34,17 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 		return nil, err
 	}
 
-	// TODO use go-querystring here!!!!!!!!!!!
-	// PostType
+	// PostType fits in the path rather than the query string
 	if params.PostType != "" {
 		url.Path = path.Join(url.Path, params.PostType)
 	}
+
+	orig := url.Query()
 	v, _ := query.Values(params)
-	url.RawQuery = v.Encode()
+	for key, val := range v {
+		orig.Set(key, val[0])
+	}
+	url.RawQuery = orig.Encode()
 
 	addLimitOffset(url, params.LimitOffset)
 
