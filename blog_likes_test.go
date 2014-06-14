@@ -3,16 +3,8 @@ package tumblr
 import (
 	"testing"
 	"fmt"
-	"os"
 )
 
-func makeTumblr() Tumblr {
-	return Tumblr{
-		Credentials: APICredentials{
-			Key: os.Getenv("MUMBLR_API_KEY"),
-		},
-	}
-}
 
 func TestLikes(t *testing.T) {
 	b := makeTumblr().NewBlog("lacecard.tumblr.com")
@@ -21,5 +13,8 @@ func TestLikes(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	fmt.Printf("total count: %d\n", l.TotalCount)
+	if l.TotalCount < 1 {
+		t.Errorf("There should be some favorites, but there aren't.")
+		return
+	}
 }
