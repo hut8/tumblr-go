@@ -1,12 +1,12 @@
 package tumblr
 
 type PostRequestParams struct {
-	PostType   string
-	Id         int64
-	Tag        string
-	ReblogInfo bool
-	NotesInfo  bool
-	Filter     string
+	PostType   string `url:"-"`
+	Id         int64  `url:"id,omitempty"`
+	Tag        string `url:"tag,omitempty"`
+	ReblogInfo bool   `url:"reblog_info,omitempty"`
+	NotesInfo  bool   `url:"notes_info,omitempty"`
+	Filter     string `url:"filter,omitempty"`
 	LimitOffset
 }
 
@@ -22,14 +22,14 @@ func (params PostRequestParams) validatePostRequestParams() error {
 }
 
 // Posts posted by a blog
-func (blog *Blog) Posts(params PostRequestParams) []Post, error {
+func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 	// Build URL
 	url, err := blog.blogEntityURL("posts")
 	if err != nil {
 		return nil, err
 	}
 
-
+	// TODO use go-querystring here!!!!!!!!!!!
 	// PostType
 	if params.PostType != "" {
 		url.Path = path.Join(url.Path, params.PostType)
@@ -61,7 +61,6 @@ func (blog *Blog) Posts(params PostRequestParams) []Post, error {
 
 	var posts []Post
 	// TODO Deserialize results
-
 
 	return posts, nil
 }
