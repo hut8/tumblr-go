@@ -2,7 +2,6 @@ package tumblr
 
 import (
 	"testing"
-	"fmt"
 )
 
 func TestPosts(t *testing.T) {

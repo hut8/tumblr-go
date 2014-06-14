@@ -1,5 +1,9 @@
 package tumblr
 
+import (
+	"path"
+)
+
 type PostRequestParams struct {
 	PostType   string `url:"-"`
 	Id         int64  `url:"id,omitempty"`
