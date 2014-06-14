@@ -74,7 +74,7 @@ func callAPI(u *url.URL) (*simplejson.Json, error) {
 
 	res := json.Get("response")
 
-	//fmt.Printf("response for %v:\n%s\n", u, pretty.Formatter(res))
+	fmt.Printf("response for %v:\n%# v\n", u, pretty.Formatter(res))
 
 	return res, nil
 }

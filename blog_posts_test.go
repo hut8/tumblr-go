@@ -9,6 +9,7 @@ func TestPosts(t *testing.T) {
 	// Check for unique post
 	params := PostRequestParams{
 		Id: int64(76803575816),
+		NotesInfo: true,
 	}
 	posts, err := b.Posts(params)
 	if err != nil {
