@@ -29,6 +29,7 @@ func (blog *Blog) Posts(params PostRequestParams) []Post, error {
 		return nil, err
 	}
 
+
 	// PostType
 	if params.PostType != "" {
 		url.Path = path.Join(url.Path, params.PostType)
