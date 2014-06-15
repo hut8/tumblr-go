@@ -47,36 +47,22 @@ func callAPI(u *url.URL) (*json.RawMessage, error) {
 		return nil, err
 	}
 
-	json, err := simplejson.NewJson(data)
+	res := &TumblrAPIResponse{}
+	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
 	}
 
-	// Handle Meta
-	statCode, err := json.Get("meta").Get("status").Int64()
-	if err != nil {
-		return nil, err
-	}
-	statMsg, err := json.Get("meta").Get("msg").String()
-	if err != nil {
-		return nil, err
-	}
-	meta := Meta{
-		Status: statCode,
-		Msg:    statMsg,
-	}
-	if meta.Status != 200 {
+	if res.Meta.Status != 200 {
 		err = fmt.Errorf("tumblr API responded with HTTP status %d: %s",
-			meta.Status,
-			meta.Msg)
+			res.Meta.Status,
+			res.Meta.Msg)
 		return nil, err
 	}
-
-	res := json.Get("response")
 
 	fmt.Printf("response for %v:\n%# v\n", u, pretty.Formatter(res))
 
-	return res, nil
+	return res.Response, nil
 }
 
 func (t Tumblr) NewBlog(baseHostname string) Blog {
