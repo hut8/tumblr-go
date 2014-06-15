@@ -48,6 +48,21 @@ type PostEntity interface {
 	Type() PostType
 }
 
+type PostCollection struct {
+	TextPosts   []TextPost
+	QuotePosts  []QuotePost
+	LinkPosts   []LinkPost
+	AnswerPosts []AnswerPost
+	VideoPosts  []VideoPost
+	AudioPosts  []AudioPost
+	PhotoPosts  []PhotoPost
+	ChatPosts   []ChatPost
+}
+
+func NewPostCollection(r *json.RawMessage) *PostCollection {
+	//
+}
+
 // Stuff in the "response":"posts" field
 type Post struct {
 	BlogName    string
