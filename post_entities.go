@@ -162,22 +162,22 @@ type Post interface {
 	TotalPosts() int64 // total posts in result set for pagination
 }
 
-func (p Post) BlogName() string    { return p.BlogName }
-func (p Post) Id() int64           { return p.Id }
-func (p Post) PostURL() string     { return p.PostURL }
-func (p Post) Type() PostType      { return TypeOfPost(p.Type) }
-func (p Post) Timestamp() int64    { return p.Timestamp }
-func (p Post) Date() string        { return p.Date }
-func (p Post) Format() string      { return p.Format }
-func (p Post) ReblogKey() string   { return p.ReblogKey }
-func (p Post) Tags() []string      { return p.Tags }
-func (p Post) Bookmarklet() bool   { return p.Bookmarklet }
-func (p Post) Mobile() bool        { return p.Mobile }
-func (p Post) SourceURL() string   { return p.SourceURL }
-func (p Post) SourceTitle() string { return p.SourceTitle }
-func (p Post) Liked() bool         { return p.Liked }
-func (p Post) State() string       { return p.State }
-func (p Post) TotalPosts() int64   { return p.TotalPosts }
+func (p *PostBase) BlogName() string    { return p.BlogName }
+func (p *PostBase) Id() int64           { return p.Id }
+func (p *PostBase) PostURL() string     { return p.PostURL }
+func (p *PostBase) Type() PostType      { return TypeOfPost(p.Type) }
+func (p *PostBase) Timestamp() int64    { return p.Timestamp }
+func (p *PostBase) Date() string        { return p.Date }
+func (p *PostBase) Format() string      { return p.Format }
+func (p *PostBase) ReblogKey() string   { return p.ReblogKey }
+func (p *PostBase) Tags() []string      { return p.Tags }
+func (p *PostBase) Bookmarklet() bool   { return p.Bookmarklet }
+func (p *PostBase) Mobile() bool        { return p.Mobile }
+func (p *PostBase) SourceURL() string   { return p.SourceURL }
+func (p *PostBase) SourceTitle() string { return p.SourceTitle }
+func (p *PostBase) Liked() bool         { return p.Liked }
+func (p *PostBase) State() string       { return p.State }
+func (p *PostBase) TotalPosts() int64   { return p.TotalPosts }
 
 // Text post
 type TextPost struct {
