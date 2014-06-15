@@ -22,24 +22,26 @@ const (
 
 // Return the PostType of the type described in the JSON
 func TypeOfPost(t string) PostType {
+	var d PostType
 	switch t {
 	case "text":
-		return Text
+		d = Text
 	case "quote":
-		return Quote
+		d = Quote
 	case "link":
-		return Link
+		d = Link
 	case "answer":
-		return Answer
+		d = Answer
 	case "video":
-		return Video
+		d = Video
 	case "audio":
-		return Audio
+		d = Audio
 	case "photo":
-		return Photo
+		d = Photo
 	case "chat":
-		return Chat
+		d = Chat
 	}
+	return d
 }
 
 // Stuff in the "response":"posts" field
