@@ -1,8 +1,8 @@
 package tumblr
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/bitly/go-simplejson"
 	"github.com/kr/pretty"
 	"io/ioutil"
 	"net/http"
@@ -11,7 +11,7 @@ import (
 
 type TumblrAPIResponse struct {
 	Meta     Meta
-	Response interface{}
+	Response *json.RawMessage
 }
 
 type Meta struct {
@@ -20,7 +20,7 @@ type Meta struct {
 }
 
 type APICredentials struct {
-	Key string
+	Key    string
 	Secret string
 }
 
@@ -35,7 +35,7 @@ type Tumblr struct {
 
 // API Functions
 
-func callAPI(u *url.URL) (*simplejson.Json, error) {
+func callAPI(u *url.URL) (*json.RawMessage, error) {
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func callAPI(u *url.URL) (*simplejson.Json, error) {
 	}
 	meta := Meta{
 		Status: statCode,
-		Msg: statMsg,
+		Msg:    statMsg,
 	}
 	if meta.Status != 200 {
 		err = fmt.Errorf("tumblr API responded with HTTP status %d: %s",
@@ -79,10 +79,10 @@ func callAPI(u *url.URL) (*simplejson.Json, error) {
 	return res, nil
 }
 
-func (t Tumblr) NewBlog(baseHostname string) (Blog) {
+func (t Tumblr) NewBlog(baseHostname string) Blog {
 	return Blog{
 		BaseHostname: baseHostname,
-		t: t,
+		t:            t,
 	}
 }
 
@@ -98,8 +98,6 @@ func (t Tumblr) apiURL() (*url.URL, error) {
 	addCredentials(url, t.Credentials)
 	return url, nil
 }
-
-// Request Parameter Types
 
 func addCredentials(url *url.URL, credentials APICredentials) {
 	vals := url.Query()

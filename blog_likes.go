@@ -3,7 +3,6 @@ package tumblr
 // Posts liked by a blog
 func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	url, err := blog.blogEntityURL("likes")
-
 	if err != nil {
 		return nil, err
 	}
