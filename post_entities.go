@@ -62,10 +62,17 @@ type Post struct {
 	TotalPosts  int64  // total posts in result set for pagination
 }
 
+// Text post
 type TextPost struct {
 	Post
 	Title string
 	Body  string
+}
+
+func NewTextPost(r json.RawMessage) (*TextPost, error) {
+	p := &TextPost{}
+	err := json.Unmarshal(r, &p)
+	return p, err
 }
 
 // Photo post
