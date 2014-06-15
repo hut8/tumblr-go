@@ -46,7 +46,7 @@ func TypeOfPost(t string) PostType {
 }
 
 type PostCollection struct {
-	Posts       []PostData // A conjunction of the below
+	Posts       []Post // A conjunction of the below
 	TextPosts   []TextPost
 	QuotePosts  []QuotePost
 	LinkPosts   []LinkPost
@@ -60,8 +60,8 @@ type PostCollection struct {
 // Constructs a PostCollection of typed Posts given the json.RawMessage
 // of "response":"posts" which must be an array
 func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
-	posts := []Post{}
-	err := json.Unmarshal(*r, posts)
+	rawPosts := []*json.RawMessage{}
+	err := json.Unmarshal(*r, rawPosts)
 	if err != nil {
 		return nil, err
 	}
