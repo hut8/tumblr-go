@@ -11,13 +11,13 @@ func TestPosts(t *testing.T) {
 		Id: int64(76803575816),
 		NotesInfo: true,
 	}
-	posts, err := b.Posts(params)
+	pc, err := b.Posts(params)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	if len(posts) != 1 {
-		t.Errorf("Specified ID, expecting one post, got %d", len(posts))
+	if len(pc.Posts) != 1 {
+		t.Errorf("Specified ID, expecting one post, got %d", len(pc.Posts))
 		return
 	}
 }
