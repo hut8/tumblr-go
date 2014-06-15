@@ -46,7 +46,7 @@ func TypeOfPost(t string) PostType {
 }
 
 type PostCollection struct {
-	Posts       []Post // A combination of the below
+	Posts       []PostData // A conjunction of the below
 	TextPosts   []TextPost
 	QuotePosts  []QuotePost
 	LinkPosts   []LinkPost
