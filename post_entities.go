@@ -78,13 +78,45 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 		// Based on the type of the post, create a TypePost (sp = specific post)
 		switch p.Type() {
 		case Text:
+			var TextPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.TextPosts = append(pc.TextPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Quote:
+			var QuotePost sp
+			json.Unmarshal(*rp, &sp)
+			pc.QuotePosts = append(pc.QuotePosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Link:
+			var LinkPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.LinkPosts = append(pc.LinkPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Answer:
+			var AnswerPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.AnswerPosts = append(pc.AnswerPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Video:
+			var VideoPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.VideoPosts = append(pc.VideoPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Audio:
+			var AudioPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.AudioPosts = append(pc.AudioPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Photo:
+			var PhotoPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.PhotoPosts = append(pc.PhotoPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		case Chat:
+			var ChatPost sp
+			json.Unmarshal(*rp, &sp)
+			pc.ChatPosts = append(pc.ChatPosts, sp)
+			pc.Posts = append(pc.Posts, sp)
 		}
 	}
 	return pc, nil
@@ -152,12 +184,6 @@ type TextPost struct {
 	PostBase
 	Title string
 	Body  string
-}
-
-func NewTextPost(r json.RawMessage) (*TextPost, error) {
-	p := &TextPost{}
-	err := json.Unmarshal(r, &p)
-	return p, err
 }
 
 // Photo post
