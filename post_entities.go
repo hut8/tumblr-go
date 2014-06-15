@@ -2,16 +2,22 @@ package tumblr
 
 // Defines each subtype of Post (see consts below) and factory methods
 
+import (
+	"encoding/json"
+)
+
 // Post Types
+type PostType int
+
 const (
-	Text   = "text"
-	Quote  = "quote"
-	Link   = "link"
-	Answer = "answer"
-	Video  = "video"
-	Audio  = "audio"
-	Photo  = "photo"
-	Chat   = "chat"
+	Text = iota
+	Quote
+	Link
+	Answer
+	Video
+	Audio
+	Photo
+	Chat
 )
 
 // Stuff in the "response":"posts" field
