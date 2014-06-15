@@ -20,6 +20,28 @@ const (
 	Chat
 )
 
+// Return the PostType of the type described in the JSON
+func TypeOfPost(t string) PostType {
+	switch t {
+	case "text":
+		return Text
+	case "quote":
+		return Quote
+	case "link":
+		return Link
+	case "answer":
+		return Answer
+	case "video":
+		return Video
+	case "audio":
+		return Audio
+	case "photo":
+		return Photo
+	case "chat":
+		return Chat
+	}
+}
+
 // Stuff in the "response":"posts" field
 type Post struct {
 	BlogName    string
