@@ -60,7 +60,8 @@ func callAPI(u *url.URL) (*json.RawMessage, error) {
 		return nil, err
 	}
 
-	fmt.Printf("response for %v:\n%# v\n", u, pretty.Formatter(res))
+	subJson, _ := res.Response.MarshalJSON()
+	fmt.Printf("response for %v:\n%# v\n%s\n", u, pretty.Formatter(res), string(subJson))
 
 	return res.Response, nil
 }
