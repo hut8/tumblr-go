@@ -108,12 +108,22 @@ type AudioPost struct {
 
 // Video post - TODO Handle all the different sources - not documented :(
 type VideoPost struct {
+	Post
 	Caption string
-	Player []EmbedObjectData
+	Player  []EmbedObjectData
 }
 
 // One embedded video player in a VideoPost
 type EmbedObjectData struct {
-	Width int
+	Width     int
 	EmbedCode string
+}
+
+// Answer post
+type AnswerPost struct {
+	Post
+	AskingName string
+	AskingURL  string
+	Question   string
+	Answer     string
 }
