@@ -102,3 +102,15 @@ type AudioPost struct {
 	TrackNumber int64
 	Year        int
 }
+
+// Video post - TODO Handle all the different sources - not documented :(
+type VideoPost struct {
+	Caption string
+	Player []EmbedObjectData
+}
+
+// One embedded video player in a VideoPost
+type EmbedObjectData struct {
+	Width int
+	EmbedCode string
+}
