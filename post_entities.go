@@ -102,9 +102,42 @@ type PostBase struct {
 	TotalPosts  int64  // total posts in result set for pagination
 }
 
-func (p *Post) Type() PostType {
-	return TypeOfPost(p.Type)
+// Accessors for the common fields of a Post
+type Post interface {
+	BlogName() string
+	Id() int64
+	PostURL() string
+	Timestamp() int64
+	Type() PostType
+	Date() string
+	Format() string
+	ReblogKey() string
+	Tags() []string
+	Bookmarklet() bool
+	Mobile() bool
+	SourceURL() string
+	SourceTitle() string
+	Liked() bool
+	State() string     // published, ueued, draft, private
+	TotalPosts() int64 // total posts in result set for pagination
 }
+
+func (p *Post) BlogName() string    { return p.BlogName }
+func (p *Post) Id() int64           { return p.Id }
+func (p *Post) PostURL() string     { return p.PostURL }
+func (p *Post) Type() PostType      { return TypeOfPost(p.Type) }
+func (p *Post) Timestamp() int64    { return p.Timestamp }
+func (p *Post) Date() string        { return p.Date }
+func (p *Post) Format() string      { return p.Format }
+func (p *Post) ReblogKey() string   { return p.ReblogKey }
+func (p *Post) Tags() []string      { return p.Tags }
+func (p *Post) Bookmarklet() bool   { return p.Bookmarklet }
+func (p *Post) Mobile() bool        { return p.Mobile }
+func (p *Post) SourceURL() string   { return p.SourceURL }
+func (p *Post) SourceTitle() string { return p.SourceTitle }
+func (p *Post) Liked() bool         { return p.Liked }
+func (p *Post) State() string       { return p.State }
+func (p *Post) TotalPosts() int64   { return p.TotalPosts }
 
 // Text post
 type TextPost struct {
