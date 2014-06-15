@@ -144,40 +144,40 @@ type PostBase struct {
 
 // Accessors for the common fields of a Post
 type Post interface {
-	BlogName() string
-	Id() int64
-	PostURL() string
-	Timestamp() int64
-	Type() PostType
-	Date() string
-	Format() string
-	ReblogKey() string
-	Tags() []string
-	Bookmarklet() bool
-	Mobile() bool
-	SourceURL() string
-	SourceTitle() string
-	Liked() bool
-	State() string     // published, ueued, draft, private
-	TotalPosts() int64 // total posts in result set for pagination
+	PostBlogName() string
+	PostId() int64
+	PostPostURL() string
+	PostTimestamp() int64
+	PostType() PostType
+	PostDate() string
+	PostFormat() string
+	PostReblogKey() string
+	PostTags() []string
+	PostBookmarklet() bool
+	PostMobile() bool
+	PostSourceURL() string
+	PostSourceTitle() string
+	PostLiked() bool
+	PostState() string     // published, ueued, draft, private
+	PostTotalPosts() int64 // total posts in result set for pagination
 }
 
-func (p *PostBase) BlogName() string    { return p.BlogName }
-func (p *PostBase) Id() int64           { return p.Id }
-func (p *PostBase) PostURL() string     { return p.PostURL }
-func (p *PostBase) Type() PostType      { return TypeOfPost(p.Type) }
-func (p *PostBase) Timestamp() int64    { return p.Timestamp }
-func (p *PostBase) Date() string        { return p.Date }
-func (p *PostBase) Format() string      { return p.Format }
-func (p *PostBase) ReblogKey() string   { return p.ReblogKey }
-func (p *PostBase) Tags() []string      { return p.Tags }
-func (p *PostBase) Bookmarklet() bool   { return p.Bookmarklet }
-func (p *PostBase) Mobile() bool        { return p.Mobile }
-func (p *PostBase) SourceURL() string   { return p.SourceURL }
-func (p *PostBase) SourceTitle() string { return p.SourceTitle }
-func (p *PostBase) Liked() bool         { return p.Liked }
-func (p *PostBase) State() string       { return p.State }
-func (p *PostBase) TotalPosts() int64   { return p.TotalPosts }
+func (p *PostBase) PostBlogName() string    { return p.BlogName }
+func (p *PostBase) PostId() int64           { return p.Id }
+func (p *PostBase) PostPostURL() string     { return p.PostURL }
+func (p *PostBase) PostType() PostType      { return TypeOfPost(p.Type) }
+func (p *PostBase) PostTimestamp() int64    { return p.Timestamp }
+func (p *PostBase) PostDate() string        { return p.Date }
+func (p *PostBase) PostFormat() string      { return p.Format }
+func (p *PostBase) PostReblogKey() string   { return p.ReblogKey }
+func (p *PostBase) PostTags() []string      { return p.Tags }
+func (p *PostBase) PostBookmarklet() bool   { return p.Bookmarklet }
+func (p *PostBase) PostMobile() bool        { return p.Mobile }
+func (p *PostBase) PostSourceURL() string   { return p.SourceURL }
+func (p *PostBase) PostSourceTitle() string { return p.SourceTitle }
+func (p *PostBase) PostLiked() bool         { return p.Liked }
+func (p *PostBase) PostState() string       { return p.State }
+func (p *PostBase) PostTotalPosts() int64   { return p.TotalPosts }
 
 // Text post
 type TextPost struct {
