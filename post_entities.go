@@ -60,8 +60,39 @@ type PostCollection struct {
 	ChatPosts   []ChatPost
 }
 
-func NewPostCollection(r *json.RawMessage) *PostCollection {
-	//
+// Constructs a PostCollection of typed Posts given the json.RawMessage
+// of "response":"posts" which must be an array
+func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
+	posts := []Post{}
+	err := json.Unmarshal(*r, posts)
+	if err != nil {
+		return nil, err
+	}
+	pc := &PostCollection{}
+	// Append the post to the right field
+	for _, p := range posts {
+		var typeDest []interface{}
+		switch p.Type {
+		case Text:
+			typeDest = pc.TextPosts
+		case Quote:
+			typeDest = pc.QuotePosts
+		case Link:
+			typeDest = pc.LinkPosts
+		case Answer:
+			typeDest = pc.AnswerPosts
+		case Video:
+			typeDest = pc.VideoPosts
+		case Audio:
+			typeDest = pc.AudioPosts
+		case Photo:
+			typeDest = pc.PhotoPosts
+		case Chat:
+			typeDest = pc.ChatPosts
+		}
+		typeDest = append(typeDest, p)
+	}
+	return pc, nil
 }
 
 // Stuff in the "response":"posts" field
@@ -84,6 +115,10 @@ type Post struct {
 	TotalPosts  int64  // total posts in result set for pagination
 }
 
+func (p *Post) Type() PostType {
+	return TypeOfPost(p.Type)
+}
+
 // Text post
 type TextPost struct {
 	Post
@@ -95,10 +130,6 @@ func NewTextPost(r json.RawMessage) (*TextPost, error) {
 	p := &TextPost{}
 	err := json.Unmarshal(r, &p)
 	return p, err
-}
-
-func (p *TextPost) Type() PostType {
-	return Text
 }
 
 // Photo post
