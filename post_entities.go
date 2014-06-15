@@ -60,8 +60,8 @@ type PostCollection struct {
 // Constructs a PostCollection of typed Posts given the json.RawMessage
 // of "response":"posts" which must be an array
 func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
-	rawPosts := []*json.RawMessage{}
-	err := json.Unmarshal(*r, rawPosts)
+	rawPosts := []json.RawMessage{}
+	err := json.Unmarshal(*r, &rawPosts)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 	for _, rp := range rawPosts {
 		// Extract most generic sections first
 		var p PostBase
-		err = json.Unmarshal(*rp, &p)
+		err = json.Unmarshal(rp, &p)
 		if err != nil {
 			return nil, err
 		}
