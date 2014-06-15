@@ -44,6 +44,10 @@ func TypeOfPost(t string) PostType {
 	return d
 }
 
+type PostEntity interface {
+	Type() PostType
+}
+
 // Stuff in the "response":"posts" field
 type Post struct {
 	BlogName    string
@@ -75,6 +79,10 @@ func NewTextPost(r json.RawMessage) (*TextPost, error) {
 	p := &TextPost{}
 	err := json.Unmarshal(r, &p)
 	return p, err
+}
+
+func (p *TextPost) Type() PostType {
+	return Text
 }
 
 // Photo post

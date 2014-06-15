@@ -1,9 +1,5 @@
 package tumblr
 
-import (
-//	"encoding/json"
-)
-
 // Posts liked by a blog
 func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	url, err := blog.blogEntityURL("likes")
@@ -19,7 +15,7 @@ func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	}
 
 	likesCount, err := res.Get("liked_count").Int64()
-	posts := make([]Post, 0, likesCount)
+	posts := make([]PostEntity, 0, likesCount)
 	rawPosts, err := res.Get("liked_posts").Array()
 	for _, _ = range rawPosts {
 		posts = append(posts, struct{}{})
@@ -35,6 +31,6 @@ func (blog Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 }
 
 type BlogLikes struct {
-	Likes      []Post
+	Likes      []PostEntity
 	TotalCount int64
 }
