@@ -1,19 +1,33 @@
 package tumblr
 
 import (
-
+	"encoding/json"
 )
 
 // Blog Info
 func (blog Blog) Info() (*BlogInfo, error) {
-	// url, err := blog.blogEntityURL("info")
-	// if err != nil {
-	// 	return nil, err
-	// }
+	url, err := blog.blogEntityURL("info")
+	if err != nil {
+		return nil, err
+	}
 
-	//res, err := callAPI(url)
+	res, err := callAPI(url)
+	if err != nil {
+		return nil, err
+	}
+	m, _ := res.MarshalJSON()
 
-	return nil, nil
+	i := &blogInfoResponse{}
+	err = json.Unmarshal(*res, i)
+	if err != nil {
+		return nil, err
+	}
+
+	return &i.Blog, nil
+}
+
+type blogInfoResponse struct {
+	Blog BlogInfo
 }
 
 // Type returned by blog.Info()
