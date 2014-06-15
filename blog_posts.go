@@ -28,7 +28,7 @@ func (params PostRequestParams) validatePostRequestParams() error {
 }
 
 // Posts posted by a blog
-func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
+func (blog *Blog) Posts(params PostRequestParams) (*PostCollection, error) {
 	// Build URL
 	url, err := blog.blogEntityURL("posts")
 	if err != nil {
@@ -40,13 +40,13 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 		url.Path = path.Join(url.Path, params.PostType)
 	}
 
+	// TODO factor this out somewhere nice
 	orig := url.Query()
 	v, _ := query.Values(params)
 	for key, val := range v {
 		orig.Set(key, val[0])
 	}
 	url.RawQuery = orig.Encode()
-
 	addLimitOffset(url, params.LimitOffset)
 
 	data, err := callAPI(url)
@@ -54,12 +54,6 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 		return nil, err
 	}
 
-	// TODO Strongly typed posts
-
-	var posts []Post
-	rawSlice := data.Get("posts").MustArray()
-	for _, r := range rawSlice {
-		posts = append(posts, Post(r))
-	}
-	return posts, nil
+	pc, err := NewPostCollection(data)
+	return pc, err
 }
