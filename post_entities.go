@@ -78,45 +78,45 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 		// Based on the type of the post, create a TypePost (sp = specific post)
 		switch p.PostType() {
 		case Text:
-			var TextPost sp
+			var sp TextPost
 			json.Unmarshal(*rp, &sp)
 			pc.TextPosts = append(pc.TextPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Quote:
-			var QuotePost sp
+			var sp QuotePost
 			json.Unmarshal(*rp, &sp)
 			pc.QuotePosts = append(pc.QuotePosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Link:
-			var LinkPost sp
+			var sp LinkPost
 			json.Unmarshal(*rp, &sp)
 			pc.LinkPosts = append(pc.LinkPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Answer:
-			var AnswerPost sp
+			var sp AnswerPost
 			json.Unmarshal(*rp, &sp)
 			pc.AnswerPosts = append(pc.AnswerPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Video:
-			var VideoPost sp
+			var sp VideoPost
 			json.Unmarshal(*rp, &sp)
 			pc.VideoPosts = append(pc.VideoPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Audio:
-			var AudioPost sp
+			var sp AudioPost
 			json.Unmarshal(*rp, &sp)
 			pc.AudioPosts = append(pc.AudioPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Photo:
-			var PhotoPost sp
+			var sp PhotoPost
 			json.Unmarshal(*rp, &sp)
 			pc.PhotoPosts = append(pc.PhotoPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		case Chat:
-			var ChatPost sp
+			var sp ChatPost
 			json.Unmarshal(*rp, &sp)
 			pc.ChatPosts = append(pc.ChatPosts, sp)
-			pc.Posts = append(pc.Posts, sp)
+			pc.Posts = append(pc.Posts, &sp)
 		}
 	}
 	return pc, nil
