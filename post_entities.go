@@ -10,7 +10,8 @@ import (
 type PostType int
 
 const (
-	Text = iota
+	Unknown PostType = iota
+	Text
 	Quote
 	Link
 	Answer
@@ -22,7 +23,7 @@ const (
 
 // Return the PostType of the type described in the JSON
 func TypeOfPost(t string) PostType {
-	var d PostType
+	d := Unknown
 	switch t {
 	case "text":
 		d = Text
