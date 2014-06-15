@@ -67,8 +67,16 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 	}
 	pc := &PostCollection{}
 	// Append the post to the right field
-	for _, p := range posts {
-		switch p.Type {
+	for _, rp := range rawPosts {
+		// Extract most generic sections first
+		var p PostData
+		err = json.Unmarshal(*rp, &p)
+		if err != nil {
+			return nil, err
+		}
+
+		// Based on the type of the post, create a TypePost (sp = specific post)
+		switch p.Type() {
 		case Text:
 		case Quote:
 		case Link:
