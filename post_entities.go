@@ -69,14 +69,14 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 	// Append the post to the right field
 	for _, rp := range rawPosts {
 		// Extract most generic sections first
-		var p PostData
+		var p PostBase
 		err = json.Unmarshal(*rp, &p)
 		if err != nil {
 			return nil, err
 		}
 
 		// Based on the type of the post, create a TypePost (sp = specific post)
-		switch p.Type() {
+		switch p.PostType() {
 		case Text:
 			var TextPost sp
 			json.Unmarshal(*rp, &sp)
