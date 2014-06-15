@@ -45,11 +45,8 @@ func TypeOfPost(t string) PostType {
 	return d
 }
 
-type PostEntity interface {
-	Type() PostType
-}
-
 type PostCollection struct {
+	Posts       []Post // A combination of the below
 	TextPosts   []TextPost
 	QuotePosts  []QuotePost
 	LinkPosts   []LinkPost
@@ -71,32 +68,22 @@ func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 	pc := &PostCollection{}
 	// Append the post to the right field
 	for _, p := range posts {
-		var typeDest []interface{}
 		switch p.Type {
 		case Text:
-			typeDest = pc.TextPosts
 		case Quote:
-			typeDest = pc.QuotePosts
 		case Link:
-			typeDest = pc.LinkPosts
 		case Answer:
-			typeDest = pc.AnswerPosts
 		case Video:
-			typeDest = pc.VideoPosts
 		case Audio:
-			typeDest = pc.AudioPosts
 		case Photo:
-			typeDest = pc.PhotoPosts
 		case Chat:
-			typeDest = pc.ChatPosts
 		}
-		typeDest = append(typeDest, p)
 	}
 	return pc, nil
 }
 
 // Stuff in the "response":"posts" field
-type Post struct {
+type PostBase struct {
 	BlogName    string
 	Id          int64
 	PostURL     string
@@ -121,7 +108,7 @@ func (p *Post) Type() PostType {
 
 // Text post
 type TextPost struct {
-	Post
+	PostBase
 	Title string
 	Body  string
 }
@@ -134,7 +121,7 @@ func NewTextPost(r json.RawMessage) (*TextPost, error) {
 
 // Photo post
 type PhotoPost struct {
-	Post
+	PostBase
 	Photos  []PhotoData
 	Caption string
 	Width   int64
@@ -156,14 +143,14 @@ type AltSizeData struct {
 
 // Quote post
 type QuotePost struct {
-	Post
+	PostBase
 	Text   string
 	Source string
 }
 
 // Link post
 type LinkPost struct {
-	Post
+	PostBase
 	Title       string
 	URL         string
 	Description string
@@ -171,7 +158,7 @@ type LinkPost struct {
 
 // Chat post
 type ChatPost struct {
-	Post
+	PostBase
 	Title    string
 	Body     string
 	Dialogue []DialogueData
@@ -186,7 +173,7 @@ type DialogueData struct {
 
 // Audio post
 type AudioPost struct {
-	Post
+	PostBase
 	Caption     string
 	Player      string
 	Plays       int64
@@ -200,7 +187,7 @@ type AudioPost struct {
 
 // Video post - TODO Handle all the different sources - not documented :(
 type VideoPost struct {
-	Post
+	PostBase
 	Caption string
 	Player  []EmbedObjectData
 }
@@ -213,7 +200,7 @@ type EmbedObjectData struct {
 
 // Answer post
 type AnswerPost struct {
-	Post
+	PostBase
 	AskingName string
 	AskingURL  string
 	Question   string
