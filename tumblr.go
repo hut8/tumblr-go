@@ -3,7 +3,6 @@ package tumblr
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kr/pretty"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -60,8 +59,8 @@ func callAPI(u *url.URL) (*json.RawMessage, error) {
 		return nil, err
 	}
 
-	subJson, _ := res.Response.MarshalJSON()
-	fmt.Printf("response for %v:\n%# v\n%s\n", u, pretty.Formatter(res), string(subJson))
+	//subJson, _ := res.Response.MarshalJSON()
+	//fmt.Printf("response for %v:\n%# v\n%s\n", u, pretty.Formatter(res), string(subJson))
 
 	return res.Response, nil
 }

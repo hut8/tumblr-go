@@ -1,6 +1,7 @@
 package tumblr
 
 import (
+	//"github.com/kr/pretty"
 	"os"
 )
 
