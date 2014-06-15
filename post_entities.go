@@ -222,7 +222,7 @@ type AudioPost struct {
 type VideoPost struct {
 	PostBase
 	Caption string
-	Player  []EmbedObjectData
+	Players []EmbedObjectData
 }
 
 // One embedded video player in a VideoPost
