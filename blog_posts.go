@@ -2,6 +2,7 @@ package tumblr
 
 import (
 	"github.com/google/go-querystring/query"
+	"encoding/json"
 	"path"
 )
 
@@ -49,11 +50,24 @@ func (blog *Blog) Posts(params PostRequestParams) (*PostCollection, error) {
 	url.RawQuery = orig.Encode()
 	addLimitOffset(url, params.LimitOffset)
 
-	data, err := callAPI(url)
+	res, err := callAPI(url)
 	if err != nil {
 		return nil, err
 	}
 
-	pc, err := NewPostCollection(data)
+	// Decode the response without decoding the posts
+	dr := &blogPostsResponse{}
+	err = json.Unmarshal(*res, &dr)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create the typed post collection
+	pc, err := NewPostCollection(dr.Posts)
 	return pc, err
+}
+
+type blogPostsResponse struct {
+	Posts *json.RawMessage
+	Total_Posts int64
 }
