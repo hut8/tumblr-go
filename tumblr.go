@@ -86,22 +86,8 @@ func (t Tumblr) NewBlog(baseHostname string) (Blog) {
 	}
 }
 
-type Post interface{}
-
 const (
 	apiBaseURL = "http://api.tumblr.com/v2/"
-)
-
-// Post Types
-const (
-	Text   = "text"
-	Quote  = "quote"
-	Link   = "link"
-	Answer = "answer"
-	Video  = "video"
-	Audio  = "audio"
-	Photo  = "photo"
-	Chat   = "chat"
 )
 
 func (t Tumblr) apiURL() (*url.URL, error) {

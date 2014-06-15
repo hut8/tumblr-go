@@ -5,6 +5,7 @@ import (
 	"path"
 )
 
+// Search criteria to be passed to the Posts method
 type PostRequestParams struct {
 	PostType   string `url:"-"`
 	Id         int64  `url:"id,omitempty"`
@@ -53,11 +54,12 @@ func (blog *Blog) Posts(params PostRequestParams) ([]Post, error) {
 		return nil, err
 	}
 
+	// TODO Strongly typed posts
+
 	var posts []Post
 	rawSlice := data.Get("posts").MustArray()
 	for _, r := range rawSlice {
 		posts = append(posts, Post(r))
 	}
-
 	return posts, nil
 }
