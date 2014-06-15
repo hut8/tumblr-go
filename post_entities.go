@@ -71,6 +71,7 @@ type QuotePost struct {
 
 // Link post
 type LinkPost struct {
+	Post
 	Title       string
 	URL         string
 	Description string
@@ -78,6 +79,7 @@ type LinkPost struct {
 
 // Chat post
 type ChatPost struct {
+	Post
 	Title    string
 	Body     string
 	Dialogue []DialogueData
@@ -92,6 +94,7 @@ type DialogueData struct {
 
 // Audio post
 type AudioPost struct {
+	Post
 	Caption     string
 	Player      string
 	Plays       int64
