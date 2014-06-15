@@ -40,10 +40,38 @@ type TextPost struct {
 	Body  string
 }
 
+// Photo post
 type PhotoPost struct {
 	Post
-	Photos []PhotoData
+	Photos  []PhotoData
+	Caption string
+	Width   int64
+	Height  int64
 }
 
+// One photo in a PhotoPost
 type PhotoData struct {
+	Caption  string // photosets only
+	AltSizes []AltSizeData
+}
+
+// One alternate size of a Photo
+type AltSizeData struct {
+	Width  int
+	Height int
+	URL    string
+}
+
+// Quote post
+type QuotePost struct {
+	Post
+	Text   string
+	Source string
+}
+
+// Link post
+type LinkPost struct {
+	Title       string
+	URL         string
+	Description string
 }
