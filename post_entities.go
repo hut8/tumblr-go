@@ -75,3 +75,30 @@ type LinkPost struct {
 	URL         string
 	Description string
 }
+
+// Chat post
+type ChatPost struct {
+	Title    string
+	Body     string
+	Dialogue []DialogueData
+}
+
+// One component of a conversation in a Dialogue in a Chat
+type DialogueData struct {
+	Name   string
+	Label  string
+	Phrase string
+}
+
+// Audio post
+type AudioPost struct {
+	Caption     string
+	Player      string
+	Plays       int64
+	AlbumArt    string
+	Artist      string
+	Album       string
+	TrackName   string
+	TrackNumber int64
+	Year        int
+}
