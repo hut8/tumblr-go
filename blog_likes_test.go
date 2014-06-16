@@ -5,9 +5,10 @@ import (
 //	"fmt"
 )
 
-
 func TestLikes(t *testing.T) {
-	b := makeTumblr().NewBlog("lacecard.tumblr.com")
+	// Note this is an improper "base hostname", which is usually what we get
+	// this API makes very little sense.
+	b := makeTumblr().NewBlog("http://lacecard.tumblr.com/")
 	l, err := b.Likes(LimitOffset{})
 	if err != nil {
 		t.Error(err)

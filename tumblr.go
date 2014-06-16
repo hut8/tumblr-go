@@ -65,13 +65,6 @@ func callAPI(u *url.URL) (*json.RawMessage, error) {
 	return res.Response, nil
 }
 
-func (t Tumblr) NewBlog(baseHostname string) Blog {
-	return Blog{
-		BaseHostname: baseHostname,
-		t:            t,
-	}
-}
-
 const (
 	apiBaseURL = "http://api.tumblr.com/v2/"
 )
