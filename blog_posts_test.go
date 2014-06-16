@@ -20,4 +20,8 @@ func TestPosts(t *testing.T) {
 		t.Errorf("Specified ID, expecting one post, got %d", len(pc.Posts))
 		return
 	}
+	if len(pc.Posts[0].PostNotes()) == 0 {
+		t.Errorf("Did not find notes that I expected to find")
+		return
+	}
 }

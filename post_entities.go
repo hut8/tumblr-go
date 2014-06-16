@@ -290,8 +290,8 @@ type AnswerPost struct {
 // },
 type NoteData struct {
 	Timestamp interface{} // this is either a string or an integer :(
-	BlogName  string
-	BlogURL   string
-	PostID    string // wtf
-	Type      string // reblog, like, post, ...?
+	BlogName  string      `json:"blog_name"`
+	BlogURL   string      `json:"blog_url"`
+	PostID    string      `json:"post_id"` // wtf
+	Type      string      `json:"type"`    // reblog, like, post, ...?
 }
