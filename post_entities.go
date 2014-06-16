@@ -286,9 +286,9 @@ type AnswerPost struct {
 // 	  "type": "reblog"
 // },
 type NoteData struct {
-	Timestamp int64
+	Timestamp string // wtf
 	BlogName  string
 	BlogURL   string
-	PostID    int64
-	Type      string
+	PostID    string // wtf
+	Type      string // reblog, like, post, ...?
 }
