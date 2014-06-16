@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 type TumblrAPIResponse struct {
@@ -86,13 +87,14 @@ func addCredentials(url *url.URL, credentials APICredentials) {
 
 func addLimitOffset(url *url.URL, params *LimitOffset) {
 	// Limit
+	vals := url.Query()
 	if params.Limit != 0 {
-		url.Query().Set("limit", string(params.Limit))
+		vals.Set("limit", strconv.Itoa(params.Limit))
 	}
 
 	// Offset
 	if params.Offset != 0 {
-		url.Query().Set("offset", string(params.Offset))
+		vals.Set("offset", strconv.Itoa(params.Offset))
 	}
-	url.RawQuery = url.Query().Encode()
+	url.RawQuery = vals.Encode()
 }
