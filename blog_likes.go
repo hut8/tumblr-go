@@ -12,7 +12,6 @@ func (blog *Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	}
 	addLimitOffset(url, params)
 
-	// res is a json.RawMessage
 	res, err := callAPI(url)
 	if err != nil {
 		return nil, err

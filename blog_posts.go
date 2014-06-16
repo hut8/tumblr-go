@@ -17,6 +17,7 @@ type PostRequestParams struct {
 	LimitOffset
 }
 
+// TODO Use this?
 func (params PostRequestParams) validatePostRequestParams() error {
 	if params.Limit < 0 || params.Limit > 20 {
 		return TumblrError{"Post request parameter limit out of range"}

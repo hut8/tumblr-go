@@ -24,4 +24,5 @@ func TestPosts(t *testing.T) {
 		t.Errorf("Did not find notes that I expected to find")
 		return
 	}
+	// TODO Add test to make sure that the notes are actually deserialized properly
 }
