@@ -139,7 +139,8 @@ type PostBase struct {
 	SourceTitle string
 	Liked       bool
 	State       string // published, ueued, draft, private
-	TotalPosts  int64  // total posts in result set for pagination
+	Notes       []NoteData
+	TotalPosts  int64 // total posts in result set for pagination
 }
 
 // Accessors for the common fields of a Post
@@ -158,7 +159,8 @@ type Post interface {
 	PostSourceURL() string
 	PostSourceTitle() string
 	PostLiked() bool
-	PostState() string     // published, ueued, draft, private
+	PostState() string // published, ueued, draft, private
+	PostNotes() []NoteData
 	PostTotalPosts() int64 // total posts in result set for pagination
 }
 
@@ -177,6 +179,7 @@ func (p *PostBase) PostSourceURL() string   { return p.SourceURL }
 func (p *PostBase) PostSourceTitle() string { return p.SourceTitle }
 func (p *PostBase) PostLiked() bool         { return p.Liked }
 func (p *PostBase) PostState() string       { return p.State }
+func (p *PostBase) PostNotes() []NoteData   { return p.Notes }
 func (p *PostBase) PostTotalPosts() int64   { return p.TotalPosts }
 
 // Text post
@@ -272,4 +275,20 @@ type AnswerPost struct {
 	AskingURL  string
 	Question   string
 	Answer     string
+}
+
+// General notes information
+// {
+// 	  "timestamp": "1401041794",
+// 	  "blog_name": "nalisification",
+// 	  "blog_url": "http://nalisification.tumblr.com/",
+// 	  "post_id": "1234",
+// 	  "type": "reblog"
+// },
+type NoteData struct {
+	Timestamp int64
+	BlogName  string
+	BlogURL   string
+	PostID    int64
+	Type      string
 }
