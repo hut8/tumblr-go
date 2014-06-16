@@ -15,7 +15,6 @@ func (blog Blog) Info() (*BlogInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	m, _ := res.MarshalJSON()
 
 	i := &blogInfoResponse{}
 	err = json.Unmarshal(*res, i)
