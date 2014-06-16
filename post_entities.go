@@ -4,6 +4,7 @@ package tumblr
 
 import (
 	"encoding/json"
+	//"fmt"
 )
 
 // Post Types
@@ -61,6 +62,8 @@ type PostCollection struct {
 // of "response":"posts" which must be an array
 func NewPostCollection(r *json.RawMessage) (*PostCollection, error) {
 	rawPosts := []json.RawMessage{}
+	//jsonSource, err := r.MarshalJSON()
+	//fmt.Printf("%s\n", string(jsonSource))
 	err := json.Unmarshal(*r, &rawPosts)
 	if err != nil {
 		return nil, err
@@ -279,14 +282,14 @@ type AnswerPost struct {
 
 // General notes information
 // {
-// 	  "timestamp": "1401041794",
+// 	  "timestamp": "1401041794", // or an integer! lol
 // 	  "blog_name": "nalisification",
 // 	  "blog_url": "http://nalisification.tumblr.com/",
 // 	  "post_id": "1234",
 // 	  "type": "reblog"
 // },
 type NoteData struct {
-	Timestamp string // wtf
+	Timestamp interface{} // this is either a string or an integer :(
 	BlogName  string
 	BlogURL   string
 	PostID    string // wtf
