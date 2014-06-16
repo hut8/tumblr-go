@@ -10,7 +10,7 @@ func (blog *Blog) Likes(params LimitOffset) (*BlogLikes, error) {
 	if err != nil {
 		return nil, err
 	}
-	addLimitOffset(url, params)
+	addLimitOffset(url, &params)
 
 	res, err := callAPI(url)
 	if err != nil {

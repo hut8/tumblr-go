@@ -6,7 +6,7 @@ func (blog Blog) Followers(params LimitOffset) ([]Blog, error) {
 	if err != nil {
 		return nil, err
 	}
-	addLimitOffset(url, params)
+	addLimitOffset(url, &params)
 	// TODO send to API
 	// TODO parse result
 	return nil, nil

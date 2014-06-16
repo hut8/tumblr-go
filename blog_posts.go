@@ -49,7 +49,7 @@ func (blog *Blog) Posts(params PostRequestParams) (*PostCollection, error) {
 		orig.Set(key, val[0])
 	}
 	url.RawQuery = orig.Encode()
-	addLimitOffset(url, params.LimitOffset)
+	addLimitOffset(url, &params.LimitOffset)
 
 	res, err := callAPI(url)
 	if err != nil {

@@ -84,7 +84,7 @@ func addCredentials(url *url.URL, credentials APICredentials) {
 	url.RawQuery = vals.Encode()
 }
 
-func addLimitOffset(url *url.URL, params LimitOffset) {
+func addLimitOffset(url *url.URL, params *LimitOffset) {
 	// Limit
 	if params.Limit != 0 {
 		url.Query().Set("limit", string(params.Limit))
@@ -94,4 +94,5 @@ func addLimitOffset(url *url.URL, params LimitOffset) {
 	if params.Offset != 0 {
 		url.Query().Set("offset", string(params.Offset))
 	}
+	url.RawQuery = url.Query().Encode()
 }
